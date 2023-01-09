@@ -1,7 +1,12 @@
 // eslint-disable-next-line
 import * as loginService from '@/api/login'
 // eslint-disable-next-line
-import { BasicLayout, BlankLayout, PageView, RouteView } from '@/layouts'
+import {
+  BasicLayout,
+  BlankLayout,
+  PageView,
+  RouteView
+} from '@/layouts'
 
 // 前端路由表 (基于动态)
 const constantRouterComponents = {
@@ -10,18 +15,13 @@ const constantRouterComponents = {
   BlankLayout: BlankLayout,
   RouteView: RouteView,
   PageView: PageView,
-  '403': () => import(/* webpackChunkName: "error" */ '@/views/exception/403'),
-  '404': () => import(/* webpackChunkName: "error" */ '@/views/exception/404'),
-  '500': () => import(/* webpackChunkName: "error" */ '@/views/exception/500'),
+  '403': () => import( /* webpackChunkName: "error" */ '@/views/exception/403'),
+  '404': () => import( /* webpackChunkName: "error" */ '@/views/exception/404'),
+  '500': () => import( /* webpackChunkName: "error" */ '@/views/exception/500'),
 
   // 你需要动态引入的页面组件
   Workplace: () => import('@/views/dashboard/Workplace'),
   Analysis: () => import('@/views/dashboard/Analysis'),
-
-  // form
-  BasicForm: () => import('@/views/form/basicForm'),
-  StepForm: () => import('@/views/form/stepForm/StepForm'),
-  AdvanceForm: () => import('@/views/form/advancedForm/AdvancedForm'),
 
   // list
   TableList: () => import('@/views/list/TableList'),
@@ -34,14 +34,34 @@ const constantRouterComponents = {
   ProfileBasic: () => import('@/views/profile/basic'),
   ProfileAdvanced: () => import('@/views/profile/advanced/Advanced'),
 
+  // archives
+  ArchivesFamily: () => import('@/views/archives/Family'),
+
+  // notice
+  NoticeList: () => import('@/views/notice/List'),
+
+  // people
+  PeopleList: () => import('@/views/people/List'),
+
+  // settings
+  Settings: () => import('@/views/settings/settings'),
+
+  // Vip
+  Vip: () => import('@/views/vip/List'),
+
+  // form
+  BasicForm: () => import('@/views/form/basicForm'),
+  StepForm: () => import('@/views/form/stepForm/StepForm'),
+  AdvanceForm: () => import('@/views/form/advancedForm/AdvancedForm'),
+
   // result
-  ResultSuccess: () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
-  ResultFail: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
+  ResultSuccess: () => import( /* webpackChunkName: "result" */ '@/views/result/Success'),
+  ResultFail: () => import( /* webpackChunkName: "result" */ '@/views/result/Error'),
 
   // exception
-  Exception403: () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
-  Exception404: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
-  Exception500: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
+  Exception403: () => import( /* webpackChunkName: "fail" */ '@/views/exception/403'),
+  Exception404: () => import( /* webpackChunkName: "fail" */ '@/views/exception/404'),
+  Exception500: () => import( /* webpackChunkName: "fail" */ '@/views/exception/500'),
 
   // account
   AccountCenter: () => import('@/views/account/center'),
@@ -90,7 +110,9 @@ export const generatorDynamicRouter = token => {
       .getCurrentUserNav(token)
       .then(res => {
         console.log('generatorDynamicRouter response:', res)
-        const { result } = res
+        const {
+          result
+        } = res
         const menuNav = []
         const childrenNav = []
         //      后端数据, 根级树数组,  根级 PID
@@ -118,7 +140,14 @@ export const generatorDynamicRouter = token => {
  */
 export const generator = (routerMap, parent) => {
   return routerMap.map(item => {
-    const { title, show, hideChildren, hiddenHeaderContent, target, icon } = item.meta || {}
+    const {
+      title,
+      show,
+      hideChildren,
+      hiddenHeaderContent,
+      target,
+      icon
+    } = item.meta || {}
     const currentRouter = {
       // 如果路由设置了 path，则作为默认 path，否则 路由地址 动态拼接生成如 /dashboard/workplace
       path: item.path || `${(parent && parent.path) || ''}/${item.key}`,

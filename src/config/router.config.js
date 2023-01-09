@@ -180,7 +180,7 @@ export const asyncRouterMap = [{
         },
         children: [{
           path: '/notice/list',
-          name: 'List',
+          name: 'noticeList',
           component: () => import('@/views/notice/List'),
           meta: {
             title: 'menu.notice.list',
@@ -201,7 +201,7 @@ export const asyncRouterMap = [{
         },
         children: [{
           path: '/people/list',
-          name: 'List',
+          name: 'peopleList',
           component: () => import('@/views/people/List'),
           meta: {
             title: 'menu.people.list',

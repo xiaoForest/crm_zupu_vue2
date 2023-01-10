@@ -31,7 +31,7 @@ export const asyncRouterMap = [{
         meta: {
           title: 'menu.dashboard',
           keepAlive: true,
-          icon: bxAnaalyse,
+          icon: 'dashboard',
           permission: ['dashboard']
         },
         children: [{
@@ -71,7 +71,7 @@ export const asyncRouterMap = [{
         redirect: '/list/table-list',
         meta: {
           title: 'menu.list',
-          icon: 'table',
+          icon: 'form',
           permission: ['table']
         },
         children: [{
@@ -176,7 +176,7 @@ export const asyncRouterMap = [{
         component: RouteView,
         meta: {
           title: 'menu.notice',
-          icon: 'table'
+          icon: 'snippets'
         },
         children: [{
           path: '/notice/list',
@@ -197,7 +197,7 @@ export const asyncRouterMap = [{
         component: RouteView,
         meta: {
           title: 'menu.people',
-          icon: 'table'
+          icon: 'team'
         },
         children: [{
           path: '/people/list',
@@ -218,7 +218,7 @@ export const asyncRouterMap = [{
         component: RouteView,
         meta: {
           title: 'menu.settings',
-          icon: 'table'
+          icon: 'setting'
         },
         children: [{
           path: '/settings/list',
@@ -331,7 +331,7 @@ export const asyncRouterMap = [{
         component: RouteView,
         meta: {
           title: 'menu.vip',
-          icon: 'table'
+          icon: 'crown'
         },
         children: [{
           path: '/vip/list',

@@ -5,11 +5,16 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="规则编号">
-                <a-input v-model="queryParam.id" placeholder=""/>
+              <a-form-item label="姓氏">
+                <a-input v-model="queryParam.id" placeholder="" />
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
+              <a-form-item label="关键字">
+                <a-input v-model="queryParam.keyword" placeholder="" />
+              </a-form-item>
+            </a-col>
+            <!-- <a-col :md="8" :sm="24">
               <a-form-item label="使用状态">
                 <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
                   <a-select-option value="0">全部</a-select-option>
@@ -47,15 +52,27 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-            </template>
-            <a-col :md="!advanced && 8 || 24" :sm="24">
-              <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
-                <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
-                <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
-                <a @click="toggleAdvanced" style="margin-left: 8px">
+            </template> -->
+            <a-col :md="(!advanced && 8) || 24" :sm="24">
+              <span
+                class="table-page-search-submitButtons"
+                :style="
+                  (advanced && { float: 'right', overflow: 'hidden' }) || {}
+                "
+              >
+                <a-button type="primary" @click="$refs.table.refresh(true)">
+                  查询
+                </a-button>
+                <a-button
+                  style="margin-left: 8px"
+                  @click="() => (this.queryParam = {})"
+                >
+                  重置
+                </a-button>
+                <!-- <a @click="toggleAdvanced" style="margin-left: 8px">
                   {{ advanced ? '收起' : '展开' }}
                   <a-icon :type="advanced ? 'up' : 'down'"/>
-                </a>
+                </a> -->
               </span>
             </a-col>
           </a-row>
@@ -86,21 +103,25 @@
         :rowSelection="rowSelection"
         showPagination="auto"
       >
-        <span slot="serial" slot-scope="text, record, index">
-          {{ index + 1 }}
+
+        <span slot="name" slot-scope="text">
+          {{ text }}
         </span>
         <span slot="status" slot-scope="text">
-          <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
+          <a-badge
+            :status="text | statusTypeFilter"
+            :text="text | statusFilter"
+          />
         </span>
-        <span slot="description" slot-scope="text">
-          <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
+        <span slot="time" slot-scope="text">
+          <ellipsis :length="19" tooltip>{{ text }}</ellipsis>
         </span>
 
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">配置</a>
+            <a @click="handleEdit(record)">启用</a>
             <a-divider type="vertical" />
-            <a @click="handleSub(record)">订阅报警</a>
+            <a @click="handleSub(record)">详情</a>
           </template>
         </span>
       </s-table>
@@ -113,7 +134,7 @@
         @cancel="handleCancel"
         @ok="handleOk"
       />
-      <step-by-step-modal ref="modal" @ok="handleOk"/>
+      <step-by-step-modal ref="modal" @ok="handleOk" />
     </a-card>
   </page-header-wrapper>
 </template>
@@ -128,60 +149,58 @@ import CreateForm from './modules/CreateForm'
 
 const columns = [
   {
-    title: '#',
-    scopedSlots: { customRender: 'serial' }
+    title: '族谱名称',
+    dataIndex: 'name',
+    scopedSlots: { customRender: 'name' },
+    key: 'name',
   },
   {
-    title: '规则编号',
-    dataIndex: 'no'
-  },
-  {
-    title: '描述',
+    title: '族谱介绍',
     dataIndex: 'description',
-    scopedSlots: { customRender: 'description' }
   },
   {
-    title: '服务调用次数',
-    dataIndex: 'callNo',
+    title: '访问人数',
+    dataIndex: 'visitors',
     sorter: true,
     needTotal: true,
-    customRender: (text) => text + ' 次'
+    scopedSlots: { customRender: 'visitors' },
   },
   {
     title: '状态',
     dataIndex: 'status',
-    scopedSlots: { customRender: 'status' }
+    scopedSlots: { customRender: 'status' },
   },
   {
-    title: '更新时间',
-    dataIndex: 'updatedAt',
-    sorter: true
+    title: '创建时间',
+    dataIndex: 'time',
+    sorter: true,
+    scopedSlots: { customRender: 'time' },
   },
   {
     title: '操作',
     dataIndex: 'action',
     width: '150px',
-    scopedSlots: { customRender: 'action' }
-  }
+    scopedSlots: { customRender: 'action' },
+  },
 ]
 
 const statusMap = {
   0: {
     status: 'default',
-    text: '关闭'
+    text: '关闭',
   },
   1: {
     status: 'processing',
-    text: '运行中'
+    text: '运行中',
   },
   2: {
     status: 'success',
-    text: '已上线'
+    text: '已上线',
   },
   3: {
     status: 'error',
-    text: '异常'
-  }
+    text: '异常',
+  },
 }
 
 export default {
@@ -190,9 +209,9 @@ export default {
     STable,
     Ellipsis,
     CreateForm,
-    StepByStepModal
+    StepByStepModal,
   },
-  data () {
+  data() {
     this.columns = columns
     return {
       // create model
@@ -204,47 +223,46 @@ export default {
       // 查询参数
       queryParam: {},
       // 加载数据方法 必须为 Promise 对象
-      loadData: parameter => {
+      loadData: (parameter) => {
         const requestParameters = Object.assign({}, parameter, this.queryParam)
         console.log('loadData request parameters:', requestParameters)
-        return getServiceList(requestParameters)
-          .then(res => {
-            return res.result
-          })
+        return getServiceList(requestParameters).then((res) => {
+          return res.result
+        })
       },
       selectedRowKeys: [],
-      selectedRows: []
+      selectedRows: [],
     }
   },
   filters: {
-    statusFilter (type) {
+    statusFilter(type) {
       return statusMap[type].text
     },
-    statusTypeFilter (type) {
+    statusTypeFilter(type) {
       return statusMap[type].status
-    }
+    },
   },
-  created () {
+  created() {
     getRoleList({ t: new Date() })
   },
   computed: {
-    rowSelection () {
+    rowSelection() {
       return {
         selectedRowKeys: this.selectedRowKeys,
-        onChange: this.onSelectChange
+        onChange: this.onSelectChange,
       }
-    }
+    },
   },
   methods: {
-    handleAdd () {
+    handleAdd() {
       this.mdl = null
       this.visible = true
     },
-    handleEdit (record) {
+    handleEdit(record) {
       this.visible = true
       this.mdl = { ...record }
     },
-    handleOk () {
+    handleOk() {
       const form = this.$refs.createModal.form
       this.confirmLoading = true
       form.validateFields((errors, values) => {
@@ -256,7 +274,7 @@ export default {
               setTimeout(() => {
                 resolve()
               }, 1000)
-            }).then(res => {
+            }).then((res) => {
               this.visible = false
               this.confirmLoading = false
               // 重置表单数据
@@ -272,7 +290,7 @@ export default {
               setTimeout(() => {
                 resolve()
               }, 1000)
-            }).then(res => {
+            }).then((res) => {
               this.visible = false
               this.confirmLoading = false
               // 重置表单数据
@@ -288,31 +306,31 @@ export default {
         }
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.visible = false
 
       const form = this.$refs.createModal.form
       form.resetFields() // 清理表单数据（可不做）
     },
-    handleSub (record) {
+    handleSub(record) {
       if (record.status !== 0) {
         this.$message.info(`${record.no} 订阅成功`)
       } else {
         this.$message.error(`${record.no} 订阅失败，规则已关闭`)
       }
     },
-    onSelectChange (selectedRowKeys, selectedRows) {
+    onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
     },
-    toggleAdvanced () {
+    toggleAdvanced() {
       this.advanced = !this.advanced
     },
-    resetSearchForm () {
+    resetSearchForm() {
       this.queryParam = {
-        date: moment(new Date())
+        date: moment(new Date()),
       }
-    }
-  }
+    },
+  },
 }
 </script>

@@ -8,9 +8,11 @@ module.exports = {
     '@vue/standard'
   ],
   rules: {
-    'no-console': 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'generator-star-spacing': 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'space-before-function-paren': 0,
+    'comma-dangle': 0,
+    'generator-star-spacing': 'error',
     'no-mixed-operators': 0,
     'vue/max-attributes-per-line': [
       2,

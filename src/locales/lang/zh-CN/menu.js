@@ -6,7 +6,7 @@ export default {
     'menu.dashboard.monitor': '监控页',
     'menu.dashboard.workplace': '工作台',
     'menu.list': '族谱管理',
-    'menu.list.table-list': '查询表格',
+    'menu.list.table-list': '族谱查询',
     'menu.list.basic-list': '标准列表',
     'menu.list.card-list': '卡片列表',
     'menu.list.search-list': '搜索列表',

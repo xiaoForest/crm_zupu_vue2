@@ -56,19 +56,10 @@
             <a-col :md="(!advanced && 8) || 24" :sm="24">
               <span
                 class="table-page-search-submitButtons"
-                :style="
-                  (advanced && { float: 'right', overflow: 'hidden' }) || {}
-                "
+                :style="(advanced && { float: 'right', overflow: 'hidden' }) || {}"
               >
-                <a-button type="primary" @click="$refs.table.refresh(true)">
-                  查询
-                </a-button>
-                <a-button
-                  style="margin-left: 8px"
-                  @click="() => (this.queryParam = {})"
-                >
-                  重置
-                </a-button>
+                <a-button type="primary" @click="$refs.table.refresh(true)"> 查询 </a-button>
+                <a-button style="margin-left: 8px" @click="() => (this.queryParam = {})"> 重置 </a-button>
                 <!-- <a @click="toggleAdvanced" style="margin-left: 8px">
                   {{ advanced ? '收起' : '展开' }}
                   <a-icon :type="advanced ? 'up' : 'down'"/>
@@ -87,9 +78,7 @@
             <!-- lock | unlock -->
             <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
           </a-menu>
-          <a-button style="margin-left: 8px">
-            批量操作 <a-icon type="down" />
-          </a-button>
+          <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
         </a-dropdown>
       </div>
 
@@ -103,15 +92,20 @@
         :rowSelection="rowSelection"
         showPagination="auto"
       >
+        <!-- <template #headerCell="{ column }">
+          <template v-if="column.key === 'name'">
+            <span>
+              <smile-outlined />
+              Name111
+            </span>
+          </template>
+        </template> -->
 
         <span slot="name" slot-scope="text">
           {{ text }}
         </span>
         <span slot="status" slot-scope="text">
-          <a-badge
-            :status="text | statusTypeFilter"
-            :text="text | statusFilter"
-          />
+          <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
         </span>
         <span slot="time" slot-scope="text">
           <ellipsis :length="19" tooltip>{{ text }}</ellipsis>

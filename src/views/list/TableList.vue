@@ -115,7 +115,8 @@
           <template>
             <a @click="handleEdit(record)">启用</a>
             <a-divider type="vertical" />
-            <a @click="handleSub(record)">详情</a>
+            <!-- <a @click="handleSub(record)">详情</a> -->
+            <router-link :to="`/list/DetailPage/?${record.key}`" >详情</router-link>
           </template>
         </span>
       </s-table>
@@ -307,11 +308,17 @@ export default {
       form.resetFields() // 清理表单数据（可不做）
     },
     handleSub(record) {
-      if (record.status !== 0) {
-        this.$message.info(`${record.no} 订阅成功`)
-      } else {
-        this.$message.error(`${record.no} 订阅失败，规则已关闭`)
-      }
+      // if (record.status !== 0) {
+      //   this.$message.info(`${record.no} 订阅成功`)
+      // } else {
+      //   this.$message.error(`${record.no} 订阅失败，规则已关闭`)
+      // }
+      console.log('record:', record)
+      // this.$router.push({
+      //   path: '/list/DetailPage/?' + record.id,
+      //   params: {},
+      //   query: {},
+      // })
     },
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys

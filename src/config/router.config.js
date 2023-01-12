@@ -69,7 +69,7 @@ export const asyncRouterMap = [{
         path: '/list',
         name: 'list',
         component: RouteView,
-        redirect: '/list/table-list',
+        // redirect: '/list/table-list',
         meta: {
           title: 'menu.list',
           icon: 'form',
@@ -86,6 +86,13 @@ export const asyncRouterMap = [{
               permission: ['table']
             }
           },
+
+          // {
+          //   path: '/list/DetailPage',
+          //   meta: {
+          //     hidden: true
+          //   },
+          // },
           {
             path: '/list/basic-list',
             name: 'BasicList',
@@ -434,7 +441,7 @@ export const asyncRouterMap = [{
         children: [{
             path: '/result/success',
             name: 'ResultSuccess',
-            component: () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
+            component: () => import( /* webpackChunkName: "result" */ '@/views/result/Success'),
             meta: {
               title: 'menu.result.success',
               keepAlive: false,
@@ -445,7 +452,7 @@ export const asyncRouterMap = [{
           {
             path: '/result/fail',
             name: 'ResultFail',
-            component: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
+            component: () => import( /* webpackChunkName: "result" */ '@/views/result/Error'),
             meta: {
               title: 'menu.result.fail',
               keepAlive: false,
@@ -470,7 +477,7 @@ export const asyncRouterMap = [{
         children: [{
             path: '/exception/403',
             name: 'Exception403',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
+            component: () => import( /* webpackChunkName: "fail" */ '@/views/exception/403'),
             meta: {
               title: 'menu.exception.not-permission',
               permission: ['exception']
@@ -479,7 +486,7 @@ export const asyncRouterMap = [{
           {
             path: '/exception/404',
             name: 'Exception404',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
+            component: () => import( /* webpackChunkName: "fail" */ '@/views/exception/404'),
             meta: {
               title: 'menu.exception.not-find',
               permission: ['exception']
@@ -488,7 +495,7 @@ export const asyncRouterMap = [{
           {
             path: '/exception/500',
             name: 'Exception500',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
+            component: () => import( /* webpackChunkName: "fail" */ '@/views/exception/500'),
             meta: {
               title: 'menu.exception.server-error',
               permission: ['exception']
@@ -580,17 +587,17 @@ export const constantRouterMap = [{
     children: [{
         path: 'login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
+        component: () => import( /* webpackChunkName: "user" */ '@/views/user/Login')
       },
       {
         path: 'register',
         name: 'register',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Register')
+        component: () => import( /* webpackChunkName: "user" */ '@/views/user/Register')
       },
       {
         path: 'register-result',
         name: 'registerResult',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
+        component: () => import( /* webpackChunkName: "user" */ '@/views/user/RegisterResult')
       },
       {
         path: 'recover',
@@ -602,6 +609,6 @@ export const constantRouterMap = [{
 
   {
     path: '/404',
-    component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404')
-  }
+    component: () => import( /* webpackChunkName: "fail" */ '@/views/exception/404')
+  },
 ]

@@ -13,17 +13,17 @@ const serverList = (options) => {
   const pageNo = parseInt(parameters.pageNo)
   const pageSize = parseInt(parameters.pageSize)
   const totalPage = Math.ceil(totalCount / pageSize)
-  // const key = (pageNo - 1) * pageSize
+  const key = (pageNo - 1) * pageSize
   const next = (pageNo >= totalPage ? (totalCount % pageSize) : pageSize) + 1
 
   for (let i = 1; i < next; i++) {
-    // const tmpKey = key + i
+    const tmpKey = key + i
     result.push({
-      // key: tmpKey,
-      // id: tmpKey,
-      // no: 'No ' + tmpKey,
-      // callNo: Mock.mock('@integer(1, 999)'),
-      // updatedAt: Mock.mock('@datetime'),
+      key: tmpKey,
+      id: tmpKey,
+      no: 'No ' + tmpKey,
+      callNo: Mock.mock('@integer(1, 999)'),
+      updatedAt: Mock.mock('@datetime'),
       name: '族谱名称' + Mock.mock('@integer(1, 999)'),
       description: '这是1一段描述',
       visitors: Mock.mock('@integer(1, 999)'),

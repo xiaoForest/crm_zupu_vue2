@@ -116,7 +116,7 @@
             <a @click="handleEdit(record)">启用</a>
             <a-divider type="vertical" />
             <!-- <a @click="handleSub(record)">详情</a> -->
-            <router-link :to="`/list/DetailPage/${record.key}`" >详情</router-link>
+            <router-link :to="`/list/detail/${record.key}`" >详情</router-link>
           </template>
         </span>
       </s-table>

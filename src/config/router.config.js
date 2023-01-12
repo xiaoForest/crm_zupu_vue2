@@ -64,7 +64,7 @@ export const asyncRouterMap = [{
         ]
       },
 
-      // list
+      // list 族谱管理
       {
         path: '/list',
         name: 'list',
@@ -101,13 +101,52 @@ export const asyncRouterMap = [{
               {
                 path: '/list/DetailPage/:pageNo([1-9]\\d*)?',
                 name: 'test',
-                component: () => import('@/views/list/BasicList'),
+                component: () => import('@/views/list/DetailPage'),
                 meta: {
-                  title: 'zzz',
+                  title: '族谱详情',
                   keepAlive: true,
                   permission: ['table']
                 },
               },
+              {
+                path: '/list/detail/:pageNo([1-9]\\d*)?',
+                name: 'detail',
+                component: () => import('@/views/list/detail/SearchLayout'),
+                // redirect: '/list/detail/article',
+                meta: {
+                  title: 'menu.list.search-list',
+                  keepAlive: true,
+                  permission: ['table']
+                },
+                children: [{
+                    path: '/list/detail/article',
+                    name: 'detail',
+                    component: () => import('../views/list/detail/Article'),
+                    meta: {
+                      title: 'menu.list.search-list.articles',
+                      permission: ['table']
+                    }
+                  },
+                  {
+                    path: '/list/detail/project',
+                    name: 'SearchProjects',
+                    component: () => import('../views/list/detail/Projects'),
+                    meta: {
+                      title: 'menu.list.search-list.projects',
+                      permission: ['table']
+                    }
+                  },
+                  {
+                    path: '/list/detail/application',
+                    name: 'SearchApplications',
+                    component: () => import('../views/list/detail/Applications'),
+                    meta: {
+                      title: 'menu.list.search-list.applications',
+                      permission: ['table']
+                    }
+                  }
+                ]
+              }
           ]
           },
 

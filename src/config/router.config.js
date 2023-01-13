@@ -64,7 +64,7 @@ export const asyncRouterMap = [{
         ]
       },
 
-      // list 族谱管理
+      // list
       {
         path: '/list',
         name: 'list',
@@ -87,7 +87,8 @@ export const asyncRouterMap = [{
               keepAlive: true,
               permission: ['table']
             },
-            children: [{
+            children: [
+              {
                 path: '/list/table-list/:pageNo([1-9]\\d*)?',
                 name: 'test',
                 component: () => import('@/views/list/TableList'),
@@ -98,61 +99,17 @@ export const asyncRouterMap = [{
                 },
               },
               {
-                path: '/list/table-list/:pageNo([1-9]\\d*)?',
-                name: 'detail',
-                component: () => import('@/views/list/detail/SearchLayout'),
-                // redirect: '/list/detail/article',
+                path: '/list/DetailPage/:pageNo([1-9]\\d*)?',
+                name: 'test',
+                component: () => import('@/views/list/Detail'),
                 meta: {
-                  title: 'menu.list.search-list',
+                  title: 'zzz',
                   keepAlive: true,
                   permission: ['table']
                 },
-                children: [{
-                    path: '/list/detail/article/:pageNo([1-9]\\d*)?',
-                    name: 'detail',
-                    component: () => import('../views/list/detail/Article'),
-                    meta: {
-                      keepAlive: true,
-                      hidden: false,
-                      title: 'menu.list.search-list.articles',
-                      permission: ['table']
-                    }
-                  },
-                  {
-                    path: '/list/detail/project',
-                    name: 'SearchProjects',
-                    component: () => import('../views/list/detail/Projects'),
-                    meta: {
-                      keepAlive: true,
-                      title: 'menu.list.search-list.projects',
-                      permission: ['table']
-                    }
-                  },
-                  {
-                    path: '/list/detail/application',
-                    name: 'SearchApplications',
-                    component: () => import('../views/list/detail/Applications'),
-                    meta: {
-                      keepAlive: true,
-                      title: 'menu.list.search-list.applications',
-                      permission: ['table']
-                    }
-                  }
-                ]
-              }
-            ]
+              },
+          ]
           },
-
-          // {
-          //   path: '/list/DetailPage',
-          //   name: 'test',
-          //   hideChildrenInMenu: true,
-          //   component: () => import('@/views/list/TableList'),
-          //   meta: {
-          //     title: 'zzz',
-          //     hidden: true
-          //   },
-          // },
           {
             path: '/list/basic-list',
             name: 'BasicList',

@@ -87,8 +87,7 @@ export const asyncRouterMap = [{
               keepAlive: true,
               permission: ['table']
             },
-            children: [
-              {
+            children: [{
                 path: '/list/table-list/:pageNo([1-9]\\d*)?',
                 name: 'test',
                 component: () => import('@/views/list/TableList'),
@@ -99,17 +98,7 @@ export const asyncRouterMap = [{
                 },
               },
               {
-                path: '/list/DetailPage/:pageNo([1-9]\\d*)?',
-                name: 'test',
-                component: () => import('@/views/list/DetailPage'),
-                meta: {
-                  title: '族谱详情',
-                  keepAlive: true,
-                  permission: ['table']
-                },
-              },
-              {
-                path: '/list/detail/:pageNo([1-9]\\d*)?',
+                path: '/list/table-list/:pageNo([1-9]\\d*)?',
                 name: 'detail',
                 component: () => import('@/views/list/detail/SearchLayout'),
                 // redirect: '/list/detail/article',
@@ -119,10 +108,12 @@ export const asyncRouterMap = [{
                   permission: ['table']
                 },
                 children: [{
-                    path: '/list/detail/article',
+                    path: '/list/detail/article/:pageNo([1-9]\\d*)?',
                     name: 'detail',
                     component: () => import('../views/list/detail/Article'),
                     meta: {
+                      keepAlive: true,
+                      hidden: false,
                       title: 'menu.list.search-list.articles',
                       permission: ['table']
                     }
@@ -132,6 +123,7 @@ export const asyncRouterMap = [{
                     name: 'SearchProjects',
                     component: () => import('../views/list/detail/Projects'),
                     meta: {
+                      keepAlive: true,
                       title: 'menu.list.search-list.projects',
                       permission: ['table']
                     }
@@ -141,13 +133,14 @@ export const asyncRouterMap = [{
                     name: 'SearchApplications',
                     component: () => import('../views/list/detail/Applications'),
                     meta: {
+                      keepAlive: true,
                       title: 'menu.list.search-list.applications',
                       permission: ['table']
                     }
                   }
                 ]
               }
-          ]
+            ]
           },
 
           // {

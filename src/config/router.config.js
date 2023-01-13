@@ -8,6 +8,7 @@ import {
 import {
   bxAnaalyse
 } from '@/core/icons'
+import { stubTrue } from 'lodash'
 
 const RouteView = {
   name: 'RouteView',
@@ -81,16 +82,16 @@ export const asyncRouterMap = [{
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             // component: () => import('@/views/list/TableList'),
             component: () => import('@/views/list/tablelist/TableListLayout'),
-            redirect: '/list/table-list/:pageNo([1-9]\\d*)?',
+            redirect: '/list/table-list/list',
             meta: {
               title: 'menu.list',
               keepAlive: true,
               permission: ['table']
             },
             children: [{
-                path: '/list/table-list/:pageNo([1-9]\\d*)?',
+                path: '/list/table-list/list',
                 name: 'test',
-                component: () => import('@/views/list/TableList'),
+                component: () => import('@/views/list/tablelist/TableList'),
                 meta: {
                   title: 'menu.list.table-list',
                   keepAlive: true,
@@ -98,48 +99,79 @@ export const asyncRouterMap = [{
                 },
               },
               {
-                path: '/list/table-list/:pageNo([1-9]\\d*)?',
+                path: 'detail/:pageNo([1-9]\\d*)?',
                 name: 'detail',
-                component: () => import('@/views/list/detail/SearchLayout'),
-                // redirect: '/list/detail/article',
+                component: () => import('../views/list/detail/Article'),
                 meta: {
-                  title: 'menu.list.search-list',
-                  keepAlive: true,
+                  // keepAlive: true,
+                  hidden: true,
+                  title: 'menu.list.table-list.articles',
                   permission: ['table']
-                },
-                children: [{
-                    path: '/list/detail/article/:pageNo([1-9]\\d*)?',
-                    name: 'detail',
-                    component: () => import('../views/list/detail/Article'),
-                    meta: {
-                      keepAlive: true,
-                      hidden: false,
-                      title: 'menu.list.search-list.articles',
-                      permission: ['table']
-                    }
-                  },
-                  {
-                    path: '/list/detail/project',
-                    name: 'SearchProjects',
-                    component: () => import('../views/list/detail/Projects'),
-                    meta: {
-                      keepAlive: true,
-                      title: 'menu.list.search-list.projects',
-                      permission: ['table']
-                    }
-                  },
-                  {
-                    path: '/list/detail/application',
-                    name: 'SearchApplications',
-                    component: () => import('../views/list/detail/Applications'),
-                    meta: {
-                      keepAlive: true,
-                      title: 'menu.list.search-list.applications',
-                      permission: ['table']
-                    }
-                  }
-                ]
+                }
+              },
+              {
+                path: '/list/detail/project',
+                name: 'SearchProjects',
+                component: () => import('../views/list/detail/Projects'),
+                meta: {
+                  keepAlive: true,
+                  title: 'menu.list.search-list.projects',
+                  permission: ['table']
+                }
+              },
+              {
+                path: '/list/detail/application',
+                name: 'SearchApplications',
+                component: () => import('../views/list/detail/Applications'),
+                meta: {
+                  keepAlive: true,
+                  title: 'menu.list.search-list.applications',
+                  permission: ['table']
+                }
               }
+              // {
+              //   path: '/list/table-list/:pageNo([1-9]\\d*)?',
+              //   name: 'detail',
+              //   component: () => import('@/views/list/tablelist/TableListLayout'),
+              //   // redirect: '/list/detail/article',
+              //   meta: {
+              //     title: 'menu.list.search-list',
+              //     keepAlive: true,
+              //     permission: ['table']
+              //   },
+              //   children: [{
+              //       path: '/list/table-list/detail/article/:pageNo([1-9]\\d*)?',
+              //       name: 'detail',
+              //       component: () => import('../views/list/detail/Article'),
+              //       meta: {
+              //         keepAlive: true,
+              //         hidden: false,
+              //         title: 'menu.list.search-list.articles',
+              //         permission: ['table']
+              //       }
+              //     },
+              //     {
+              //       path: '/list/detail/project',
+              //       name: 'SearchProjects',
+              //       component: () => import('../views/list/detail/Projects'),
+              //       meta: {
+              //         keepAlive: true,
+              //         title: 'menu.list.search-list.projects',
+              //         permission: ['table']
+              //       }
+              //     },
+              //     {
+              //       path: '/list/detail/application',
+              //       name: 'SearchApplications',
+              //       component: () => import('../views/list/detail/Applications'),
+              //       meta: {
+              //         keepAlive: true,
+              //         title: 'menu.list.search-list.applications',
+              //         permission: ['table']
+              //       }
+              //     }
+              //   ]
+              // }
             ]
           },
 

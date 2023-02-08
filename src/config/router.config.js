@@ -103,7 +103,7 @@ export const asyncRouterMap = [{
                 name: 'test',
                 component: () => import('@/views/list/Detail'),
                 meta: {
-                  title: 'zzz',
+                  title: '族谱详情',
                   keepAlive: true,
                   permission: ['table']
                 },

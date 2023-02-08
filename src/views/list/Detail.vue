@@ -65,6 +65,9 @@
     </template>
     <div v-show="tabActiveKey == 'tab1'">
       <div ref="editor"></div>
+      <!-- <div class="text-editor">
+        <p>纯文本</p>
+      </div> -->
     </div>
     <div v-show="tabActiveKey == 'tab2'">
       <div class="ant-pro-pages-list-projects-cardList">
@@ -103,7 +106,6 @@
 import E from 'wangeditor-antd'
 import moment from 'moment'
 import { TagSelect, StandardFormRow, Ellipsis, AvatarList } from '@/components'
-import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
 
 const TagSelectOption = TagSelect.Option
 const AvatarListItem = AvatarList.Item
@@ -128,7 +130,7 @@ export default {
     TagSelectOption,
     StandardFormRow,
   },
-  props: ['getFullText', 'content'], // 回调方法
+  // props: ['getFullText', 'content'], // 回调方法
   name: 'CardList',
   data() {
     this.tabList = [
@@ -139,7 +141,8 @@ export default {
       tabActiveKey: 'tab1',
       extraImage: 'https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png',
       dataSource,
-
+      content: ' ', // 默认清空得空一格
+      getFullText: '', // 还没搞明白 不过可以先忽略 好像没用
       data: [],
       form: this.$form.createForm(this),
       loading: true,
@@ -167,6 +170,7 @@ export default {
     // 最大高度 默认 500px
     editor.customConfig.maxHeight = '600px'
     editor.customConfig.menus = [
+      // 缺什么在官网搜名字一加就行
       'head', // 标题
       'bold', // 粗体
       'fontSize', // 字号
@@ -193,6 +197,7 @@ export default {
       console.log(`selected ${value}`)
     },
     getList() {
+      // 这里是相册 官方的实例而已
       this.$http.get('/list/article', { params: { count: 8 } }).then((res) => {
         console.log('res', res)
         this.data = res.result
@@ -332,7 +337,7 @@ export default {
             width: 50%;
           }
           &:nth-child(2) {
-            width:14%;
+            width: 14%;
           }
         }
         .tit {
@@ -386,6 +391,11 @@ export default {
         }
       }
     }
+  }
+  :deep(.text-editor) {
+    background: #fff;
+    padding: 20px;
+    line-height: 1.4;
   }
 }
 </style>

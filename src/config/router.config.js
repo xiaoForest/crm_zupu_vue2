@@ -87,8 +87,7 @@ export const asyncRouterMap = [{
               keepAlive: true,
               permission: ['table']
             },
-            children: [
-              {
+            children: [{
                 path: '/list/table-list/:pageNo([1-9]\\d*)?',
                 name: 'test',
                 component: () => import('@/views/list/TableList'),
@@ -108,17 +107,17 @@ export const asyncRouterMap = [{
                   permission: ['table']
                 },
               },
-          ]
-          },
-          {
-            path: '/list/basic-list',
-            name: 'BasicList',
-            component: () => import('@/views/list/BasicList'),
-            meta: {
-              title: 'menu.list.basic-list',
-              keepAlive: true,
-              permission: ['table']
-            }
+              {
+                path: '/list/basic-list/:pageNo([1-9]\\d*)?',
+                name: 'BasicList',
+                component: () => import('@/views/list/BasicList'),
+                meta: {
+                  title: 'menu.list.basic-list',
+                  keepAlive: true,
+                  permission: ['table']
+                }
+              },
+            ]
           },
           {
             path: '/list/card',

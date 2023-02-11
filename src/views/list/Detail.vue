@@ -1,5 +1,6 @@
 <template>
   <page-header-wrapper
+    title="家族名称哦哈哈哈哈唯一的"
     class="detail"
     :tab-list="tabList"
     :tab-active-key="tabActiveKey"
@@ -9,60 +10,64 @@
       }
     "
   >
-    <template v-slot:extraContent>
-      <div class="topCon">
-        <div class="row">
-          <h4 class="tit">名称：清朝皇室系简谱</h4>
-          <div class="demo-dropdown-wrap">
-            <a-button class="one">冻结族谱</a-button>
-            <a-dropdown-button @click="handleButtonClick">
-              操作二
-              <template #overlay>
-                <a-menu @click="handleMenuClick">
-                  <a-menu-item key="1">
-                    <UserOutlined />
-                    1st menu item
-                  </a-menu-item>
-                  <a-menu-item key="2">
-                    <UserOutlined />
-                    2nd menu item
-                  </a-menu-item>
-                  <a-menu-item key="3">
-                    <UserOutlined />
-                    3rd item
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown-button>
-            <a-button type="primary">主操作</a-button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="boxes">
-            <ul class="text-ul">
-              <li>创建人员：丁哥</li>
-              <li>访问模式：公开</li>
-              <li>族谱编号：ADF032</li>
-              <li>访问人次：<strong>1242</strong></li>
-              <li>创建日期：2017-07-07</li>
-              <li>成员人数：<strong>339</strong></li>
-            </ul>
-          </div>
-          <div class="boxes">
-            <div class="text-dl">
-              <dl>
-                <dt>会员</dt>
-                <dd>未开通</dd>
-              </dl>
-              <dl>
-                <dt>订单金额</dt>
-                <dd>生效</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
+    <template v-slot:content>
+      <a-descriptions size="small" :column="isMobile ? 1 : 2">
+        <a-descriptions-item label="创建人员">曲丽丽</a-descriptions-item>
+        <a-descriptions-item label="访问模式">公开</a-descriptions-item>
+        <a-descriptions-item label="族谱编号">GOOD0001</a-descriptions-item>
+        <a-descriptions-item label="访问人次">
+          <a href="">12421</a>
+        </a-descriptions-item>
+        <a-descriptions-item label="创建日期">2017-07-07</a-descriptions-item>
+        <a-descriptions-item label="成员人数">
+          <a href="">12421</a>
+        </a-descriptions-item>
+      </a-descriptions>
     </template>
+
+    <!-- actions -->
+    <template v-slot:extra>
+      <a-button-group style="margin-right: 5px">
+        <a-button>冻结族谱</a-button>
+        <a-dropdown-button @click="handleButtonClick">
+          操作二
+          <template #overlay>
+            <a-menu @click="handleMenuClick">
+              <a-menu-item key="1">
+                <UserOutlined />
+                1st menu item
+              </a-menu-item>
+              <a-menu-item key="2">
+                <UserOutlined />
+                2nd menu item
+              </a-menu-item>
+              <a-menu-item key="3">
+                <UserOutlined />
+                3rd item
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown-button>
+      </a-button-group>
+      <a-button type="primary" style="color: #fff; margin-right: 4px">主操作</a-button>
+      <a-button>
+        <router-link :to="`/list/basic-list`">成员列表</router-link>
+      </a-button>
+    </template>
+
+    <template v-slot:extraContent>
+      <a-row class="status-list">
+        <a-col :xs="12" :sm="12">
+          <div class="text">会员</div>
+          <div class="heading">未开通</div>
+        </a-col>
+        <a-col :xs="12" :sm="12">
+          <div class="text">订单金额</div>
+          <div class="heading">生效</div>
+        </a-col>
+      </a-row>
+    </template>
+
     <div v-show="tabActiveKey == 'tab1'">
       <div ref="editor"></div>
       <!-- <div class="text-editor">
@@ -130,7 +135,7 @@ export default {
     TagSelectOption,
     StandardFormRow,
   },
-  // props: ['getFullText', 'content'], // 回调方法
+  // props: ['getFullText', 'content'], // 回调方法 似乎没啥用  那个编辑器官方的示例
   name: 'CardList',
   data() {
     this.tabList = [
@@ -317,85 +322,13 @@ export default {
     }
   }
 }
-.detail {
-  :deep(.ant-page-header-heading) {
-    display: none;
-  }
-  :deep(.ant-pro-page-header-wrap-extraContent) {
-    min-width: 100%;
-    margin-left: 0;
-    text-align: left;
-    .topCon {
-      width: 100%;
-      .row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        align-items: center;
-        .boxes {
-          &:nth-child(1) {
-            width: 50%;
-          }
-          &:nth-child(2) {
-            width: 14%;
-          }
-        }
-        .tit {
-          font-size: 18px;
-          font-weight: bold;
-          margin-bottom: 0;
-          line-height: 1;
-        }
-        .demo-dropdown-wrap {
-          .one {
-            position: relative;
-            top: 1px;
-            z-index: 2;
-          }
-        }
-        .ant-btn-primary {
-          span {
-            color: #fff;
-          }
-        }
-        .text-ul {
-          margin: 20px 0;
-          padding: 0;
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          li {
-            width: 50%;
-            margin: 10px 0;
-            color: #000;
-            strong {
-              color: #096dd9;
-              font-weight: normal;
-            }
-          }
-        }
-        .text-dl {
-          width: 100%;
-          display: flex;
-          dl {
-            width: 50%;
-            dt {
-              margin-bottom: 15px;
-              color: rgb(215, 215, 215);
-            }
-            dd {
-              font-size: 24px;
-              color: #000;
-            }
-          }
-        }
-      }
-    }
-  }
-  :deep(.text-editor) {
-    background: #fff;
-    padding: 20px;
-    line-height: 1.4;
-  }
+
+.text {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.heading {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 20px;
 }
 </style>

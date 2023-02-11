@@ -113,6 +113,8 @@
 
         <span slot="action" slot-scope="text, record">
           <template>
+            <router-link :to="`/list/basic-list/${record.key}`" >成员列表</router-link>
+            <a-divider type="vertical" />
             <a @click="handleEdit(record)">启用</a>
             <a-divider type="vertical" />
             <!-- <a @click="handleSub(record)">详情</a> -->

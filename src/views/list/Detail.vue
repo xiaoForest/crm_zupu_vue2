@@ -1,15 +1,5 @@
 <template>
-  <page-header-wrapper
-    title="家族名称哦哈哈哈哈唯一的"
-    class="detail"
-    :tab-list="tabList"
-    :tab-active-key="tabActiveKey"
-    :tab-change="
-      (key) => {
-        this.tabActiveKey = key
-      }
-    "
-  >
+  <page-header-wrapper title="家族名称哦哈哈哈哈唯一的" class="detail">
     <template v-slot:content>
       <a-descriptions size="small" :column="isMobile ? 1 : 2">
         <a-descriptions-item label="创建人员">曲丽丽</a-descriptions-item>
@@ -68,49 +58,23 @@
       </a-row>
     </template>
 
-    <div v-show="tabActiveKey == 'tab1'">
-      <div ref="editor"></div>
-      <!-- <div class="text-editor">
-        <p>纯文本</p>
-      </div> -->
-    </div>
-    <div v-show="tabActiveKey == 'tab2'">
-      <div class="ant-pro-pages-list-projects-cardList">
-        <a-list :loading="loading" :data-source="data" :grid="{ gutter: 24, xl: 4, lg: 3, md: 3, sm: 2, xs: 1 }">
-          <a-list-item slot="renderItem" slot-scope="item">
-            <a-card class="ant-pro-pages-list-projects-card" hoverable>
-              <img slot="cover" :src="item.cover" :alt="item.title" />
-              <a-card-meta :title="item.title">
-                <template slot="description">
-                  <ellipsis :length="50">{{ item.description }}</ellipsis>
-                </template>
-              </a-card-meta>
-              <div class="cardItemContent">
-                <span>{{ item.updatedAt | fromNow }}</span>
-                <div class="avatarList">
-                  <avatar-list size="small" :max-length="2">
-                    <avatar-list-item
-                      v-for="(member, i) in item.members"
-                      :key="`${item.id}-avatar-${i}`"
-                      :src="member.avatar"
-                      :tips="member.name"
-                    />
-                  </avatar-list>
-                </div>
-              </div>
-            </a-card>
-          </a-list-item>
-        </a-list>
-      </div>
-    </div>
+    <a-card
+      :bordered="false"
+      :tabList="tabListNoTitle"
+      :activeTabKey="noTitleKey"
+      @tabChange="(key) => handleTabChange(key, 'noTitleKey')"
+    >
+      <article-page v-if="noTitleKey === 'article'"></article-page>
+      <project-page v-else-if="noTitleKey === 'project'"></project-page>
+    </a-card>
   </page-header-wrapper>
 </template>
 
 <script>
-// https://top-dante.github.io/wangeditor-antd/index.html
-import E from 'wangeditor-antd'
 import moment from 'moment'
 import { TagSelect, StandardFormRow, Ellipsis, AvatarList } from '@/components'
+import { PageView, RouteView } from '@/layouts'
+import { AppPage, ArticlePage, ProjectPage } from './page'
 
 const TagSelectOption = TagSelect.Option
 const AvatarListItem = AvatarList.Item
@@ -134,23 +98,34 @@ export default {
     TagSelect,
     TagSelectOption,
     StandardFormRow,
+
+    RouteView,
+    PageView,
+    AppPage,
+    ArticlePage,
+    ProjectPage,
   },
-  // props: ['getFullText', 'content'], // 回调方法 似乎没啥用  那个编辑器官方的示例
-  name: 'CardList',
+  name: '',
   data() {
-    this.tabList = [
-      { key: 'tab1', tab: '家族简介' },
-      { key: 'tab2', tab: '家族相册' },
-    ]
     return {
       tabActiveKey: 'tab1',
       extraImage: 'https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png',
       dataSource,
-      content: ' ', // 默认清空得空一格
-      getFullText: '', // 还没搞明白 不过可以先忽略 好像没用
       data: [],
       form: this.$form.createForm(this),
       loading: true,
+
+      tabListNoTitle: [
+        {
+          key: 'article',
+          tab: '家族简介',
+        },
+        {
+          key: 'project',
+          tab: '家族相册',
+        },
+      ],
+      noTitleKey: 'article',
     }
   },
   filters: {
@@ -158,56 +133,10 @@ export default {
       return moment(date).fromNow()
     },
   },
-  mounted() {
-    this.getList()
-    const editor = new E(this.$refs.editor)
-    editor.customConfig.onchange = (html) => {
-      this.getFullText(html) // 内容赋值
-    }
-    editor.customConfig.uploadImgServer = '你的上传地址'
-    editor.customConfig.uploadFileName = 'file'
-    // 新增
-    editor.customConfig.zIndex = 100
-    // 工具条高度 默认 50px small为40px
-    editor.customConfig.toolBarSize = 'small'
-    // 最小高度 默认 100px
-    editor.customConfig.minHeight = '400px'
-    // 最大高度 默认 500px
-    editor.customConfig.maxHeight = '600px'
-    editor.customConfig.menus = [
-      // 缺什么在官网搜名字一加就行
-      'head', // 标题
-      'bold', // 粗体
-      'fontSize', // 字号
-      'foreColor', // 文字颜色
-      'backColor', // 背景颜色
-      'link', // 插入链接
-      'list', // 列表
-      'image', // 插入图片
-    ]
-    editor.customConfig.uploadImgParams = {
-      from: 'editor',
-    }
-    editor.create()
-    // 如果默认传递content值则渲染默认内容
-    if (this.content) {
-      editor.txt.html(this.content)
-    }
-  },
+  mounted() {},
   methods: {
-    testFun() {
-      this.$message.info('快速开始被点击！')
-    },
-    handleChange(value) {
-      console.log(`selected ${value}`)
-    },
-    getList() {
-      // 这里是相册 官方的实例而已
-      this.$http.get('/list/article', { params: { count: 8 } }).then((res) => {
-        console.log('res', res)
-        this.data = res.result
-        this.loading = false
-      })
+    handleTabChange(key, type) {
+      this[type] = key
     },
   },
 }
@@ -292,6 +221,7 @@ export default {
     font-size: 14px;
   }
 }
+
 .ant-pro-pages-list-projects-cardList {
   margin-top: 24px;
 
